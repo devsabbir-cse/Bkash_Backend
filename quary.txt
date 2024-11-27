@@ -1,0 +1,18 @@
+create table users (
+    no varchar(14) primary key not null,
+    name varchar(14)  not null,
+    password varchar(14)  not null,
+    amount int not null
+)
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_no VARCHAR(15) NOT NULL,
+    receiver_no VARCHAR(15) NOT NULL,
+    transaction_type VARCHAR(50) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    description VARCHAR(255),
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_no) REFERENCES users(no),
+    FOREIGN KEY (receiver_no) REFERENCES users(no)
+);
