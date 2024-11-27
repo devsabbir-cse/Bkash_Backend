@@ -2,7 +2,7 @@ create table users (
     no varchar(14) primary key not null,
     name varchar(14)  not null,
     password varchar(14)  not null,
-    amount int not null
+    balance int not null
 )
 
 CREATE TABLE transactions (
