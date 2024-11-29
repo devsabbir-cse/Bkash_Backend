@@ -1211,3 +1211,115 @@ exports.getAllAgent = (req, res) => {
 
 
 
+
+// SELECT balance FROM users WHERE no=2
+
+// UPDATE company_balance SET company_balance = company_balance + balance WHERE ID = 1
+
+// DELETE FROM users
+// WHERE no=2;
+
+
+
+// exports.delete_user = async (req, res) => {
+//   const userNo = req.body; // Assuming user number is passed in the request parameters
+//   console.log(userNo,"userNouserNo");
+  
+//   try {
+//     // Start the transaction
+//     await db.beginTransaction();
+
+//     // Step 1: Get the user's balance
+//     const [results] = await db.promise().query('SELECT balance FROM users WHERE no = ?', [userNo]);
+
+//     if (results.length === 0) {
+//       throw new Error('User not found');
+//     }
+
+//     const balance = results[0].balance;
+
+//     // Step 2: Update the company balance
+//     await db.promise().query('UPDATE company_balance SET company_balance = company_balance + ? WHERE ID = 1', [balance]);
+
+//     // Step 3: Delete the user from the users table
+//     await db.promise().query('DELETE FROM users WHERE no = ?', [userNo]);
+
+//     // Commit the transaction if all queries are successful
+//     await db.commit();
+//     res.status(200).json({ success: true, message: 'User deleted and company balance updated successfully' });
+//   } catch (error) {
+//     // Rollback the transaction in case of error
+//     await db.rollback();
+//     res.status(500).json({ success: false, message: 'Error processing request', error: error.message });
+//   }
+// };
+
+exports.delete_user = (req, res) => {
+  const { no } = req.body;
+  if (!no) {
+    return res.status(400).json({ error: "Number is required." });
+  }
+
+  // Step 1: Get the user's balance
+  const getBalanceQuery = "SELECT balance FROM users WHERE no = ?";
+  db.query(getBalanceQuery, [no], (error, results) => {
+    if (error) {
+      console.error("Error fetching user balance:", error.message);
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching user balance",
+        error: error.message,
+      });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const balance = results[0].balance;
+
+    // Step 2: Update the company balance
+    const updateCompanyBalanceQuery = "UPDATE company_balance SET company_balance = company_balance + ? WHERE ID = 1";
+    db.query(updateCompanyBalanceQuery, [balance], (error) => {
+      if (error) {
+        console.error("Error updating company balance:", error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Error updating company balance",
+          error: error.message,
+        });
+      }
+
+      // Step 3: Delete the user from the users table
+      const deleteUserQuery = "DELETE FROM users WHERE no = ?";
+      db.query(deleteUserQuery, [no], (error) => {
+        if (error) {
+          console.error("Error deleting user:", error.message);
+          return res.status(500).json({
+            success: false,
+            message: "Error deleting user",
+            error: error.message,
+          });
+        }
+
+        const organazation_transection = `
+              INSERT INTO organazation_transection (senderno,receiverno,amount,charge,profit,type) 
+              VALUES (?, ?,?, ?,?,?)`;
+            const transactionType = "User Deleted";
+            
+            db.query(organazation_transection, [ "Number--->",no,balance, 0,0 ,transactionType ], (err) => {
+              if (err) {
+                console.error("Error logging transaction:", err);
+                return res.status(500).json({ error: "Transaction logging failed." });
+              }
+
+
+        res.status(200).json({
+          success: true,
+          message: "User deleted and company balance updated successfully",
+        });
+      });
+      });
+    });
+  });
+};

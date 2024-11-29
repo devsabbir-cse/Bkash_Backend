@@ -38,5 +38,6 @@ router.get("/CashOut_organazation_transection", authController.CashOut_organazat
 router.get("/p2psendMoney_organazation_transection", authController.p2psendMoney_organazation_transection);
 router.get("/getAllUsers", authController.getAllUsers);
 router.get("/getAllAgent", authController.getAllAgent);
+router.delete("/delete_user", authController.delete_user);
 
 module.exports = router;
