@@ -1,18 +1,39 @@
+create database bkash
+create database agent_transection_history
+create database user_transection_history
+
+create table agent_users (
+    no varchar(14) primary key not null,
+    name varchar(14)  not null,
+    password varchar(14)  not null,
+    balance FLOAT  not null
+)
+
+CREATE TABLE company_balance (
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    company_balance FLOAT NOT NULL,
+    password  varchar(100) not null
+);
+
+CREATE TABLE organazation_transection (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    senderno VARCHAR(14) NOT NULL,
+    receiverno VARCHAR(14) NOT NULL,
+    amount FLOAT NOT NULL,
+    charge FLOAT NOT NULL,
+    profit FLOAT NOT NULL,
+    type VARCHAR(50) NOT NULL
+);
+
 create table users (
     no varchar(14) primary key not null,
     name varchar(14)  not null,
     password varchar(14)  not null,
-    balance int not null
+    balance FLOAT  not null
 )
 
-CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_no VARCHAR(15) NOT NULL,
-    receiver_no VARCHAR(15) NOT NULL,
-    transaction_type VARCHAR(50) NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
-    description VARCHAR(255),
-    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_no) REFERENCES users(no),
-    FOREIGN KEY (receiver_no) REFERENCES users(no)
-);
+INSERT INTO company_balance (company_balance) 
+VALUES (1000.50);
+
+
+
