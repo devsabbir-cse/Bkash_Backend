@@ -32,8 +32,10 @@ create table users (
     balance FLOAT  not null
 )
 
-INSERT INTO company_balance (company_balance) 
-VALUES (1000.50);
+INSERT INTO company_balance (ID, company_balance, password)
+VALUES (1, 1000, '1234');
+
+
 
 
 
