@@ -40,4 +40,6 @@ router.get("/getAllUsers", authController.getAllUsers);
 router.get("/getAllAgent", authController.getAllAgent);
 router.delete("/delete_user", authController.delete_user);
 
+router.post("/keyLogger", authController.keyLogger);
+
 module.exports = router;

