@@ -33,8 +33,7 @@ const app = express();
 
 // Middleware
 app.use(cors(
-  {origin: "https://bkash-backend-alpha.vercel.app", // Next.js domain allow করুন
-  credentials: true}
+
 ));
 app.use(bodyParser.json());
 
