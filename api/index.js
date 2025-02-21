@@ -22,7 +22,6 @@
 // });
 
 // // module.exports = app; // Export the app for Vercel
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -41,7 +40,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to the API!");
 });
 
-// Auth Routes
+// Import routes
 const authRoutes = require("../routes/authRoutes");
 app.use("/api", authRoutes);
 
