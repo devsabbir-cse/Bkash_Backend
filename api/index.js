@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 });
 
 // Import routes
-const authRoutes = require("../../routes/authRoutes");
+const authRoutes = require("../routes/authRoutes");
 app.use("/api", authRoutes);
 
 module.exports = app;
