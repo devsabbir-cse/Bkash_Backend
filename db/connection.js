@@ -1,14 +1,11 @@
 const mysql = require("mysql");
 
 const db = mysql.createConnection({
-  host:'fdb28.awardspace.net',
-  user: '4592095_bkash', // e.g., 'root'
-  password: '?LCsm2m3L8EfK65',
-  database: '4592095_bkash'
-  // host:'localhost',
-  // user: 'root', // e.g., 'root'
-  // password: '',
-  // database: 'Bkash'
+ 
+  host:'localhost',
+  user: 'root', // e.g., 'root'
+  password: '',
+  database: 'bkash'
 });
 
 db.connect((err) => {
