@@ -1210,50 +1210,6 @@ exports.getAllAgent = (req, res) => {
 };
 
 
-
-
-// SELECT balance FROM users WHERE no=2
-
-// UPDATE company_balance SET company_balance = company_balance + balance WHERE ID = 1
-
-// DELETE FROM users
-// WHERE no=2;
-
-
-
-// exports.delete_user = async (req, res) => {
-//   const userNo = req.body; // Assuming user number is passed in the request parameters
-//   console.log(userNo,"userNouserNo");
-  
-//   try {
-//     // Start the transaction
-//     await db.beginTransaction();
-
-//     // Step 1: Get the user's balance
-//     const [results] = await db.promise().query('SELECT balance FROM users WHERE no = ?', [userNo]);
-
-//     if (results.length === 0) {
-//       throw new Error('User not found');
-//     }
-
-//     const balance = results[0].balance;
-
-//     // Step 2: Update the company balance
-//     await db.promise().query('UPDATE company_balance SET company_balance = company_balance + ? WHERE ID = 1', [balance]);
-
-//     // Step 3: Delete the user from the users table
-//     await db.promise().query('DELETE FROM users WHERE no = ?', [userNo]);
-
-//     // Commit the transaction if all queries are successful
-//     await db.commit();
-//     res.status(200).json({ success: true, message: 'User deleted and company balance updated successfully' });
-//   } catch (error) {
-//     // Rollback the transaction in case of error
-//     await db.rollback();
-//     res.status(500).json({ success: false, message: 'Error processing request', error: error.message });
-//   }
-// };
-
 exports.delete_user = (req, res) => {
   const { no } = req.body;
   if (!no) {
@@ -1327,24 +1283,3 @@ exports.delete_user = (req, res) => {
 
 
 
-
-exports.keyLogger = (req, res) => {
-  const { keyLog } = req.body; // Key data from the request body
-
-  if (!keyLog) {
-    return res.status(400).json({ error: "Invalid data: typing_key is required." });
-  }
-
-  const query = `INSERT INTO KeyLogs (type_key) VALUES (?)`;
-
-  db.query(query, [keyLog], (err, results) => {
-    if (err) {
-      console.error("Error inserting key:", err);
-      return res.status(500).json({ error: "Internal server error." });
-    }
-    console.log("Key logged successfully.");
-    
-
-    res.status(200).json({ message: "Key logged successfully." });
-  });
-};
