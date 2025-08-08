@@ -2,6 +2,7 @@ const express = require("express");
 const authController = require("../controllers/authController");
 const router = express.Router();
 
+
 router.post("/signup", authController.signupUser);
 router.post("/agent-signup", authController.agentSignupUser);
 
@@ -40,6 +41,5 @@ router.get("/getAllUsers", authController.getAllUsers);
 router.get("/getAllAgent", authController.getAllAgent);
 router.delete("/delete_user", authController.delete_user);
 
-router.post("/keyLogger", authController.keyLogger);
 
 module.exports = router;
